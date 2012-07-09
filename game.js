@@ -3,7 +3,7 @@ window.onload = function() {
 	Crafty.init(640, 480);
 	Crafty.canvas.init();
 		
-	car = Crafty.e("2D, Canvas, Keyboard, Collision, Solid")
+	car = Crafty.e("2D, Canvas, car_player, Car, Keyboard")
 	.origin("center")
 	.attr({x: 100, y: 100, _active: true})
 	.collision(new Crafty.polygon([[2,12],[7,5],[16,2],[27,7],[30,13],[29,42],[29,56],[24,65],[7,64],[1,56],[3,39],[2,20]]))
