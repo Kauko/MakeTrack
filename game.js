@@ -11,7 +11,7 @@ window.onload = function() {
 };
 
 Crafty.scene("loading_game", function() {
-	load = ["http://kauko.pingtimeout.net/track.png"];
+	load = ["http://kauko.pingtimeout.net/track.png","http://kauko.pingtimeout.net/track_data.png"];
 	Crafty.load(load, function(){
 		Crafty.scene("play");
 	});

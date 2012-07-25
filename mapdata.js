@@ -14,12 +14,30 @@ Crafty.c("MapData", {
 		var amt = this._imgd.width * this._imgd.height;
 		var floorTypes = {
 			0 : "black",
-			16777215 : "white"
+			16777215 : "white",
+			65313 : "A",
+			16711680 : "B",
+			9983 : "goal"
 		};
-	
+		
+		var fA = false;
+		var fB = false;
+		var fG = false;
+		
 		for(var i = 0, pos = 0; i<amt; i++, pos+=4){
+			
 			pixel = data[pos] * 65536 + data[pos+1] * 256 + data[pos+2];
 			this._floor[i] = floorTypes[pixel];
+			if(floorTypes[pixel] == "A" && fA == false){
+				console.log("found A");
+				fA = true;
+			}if(floorTypes[pixel] == "B" && fB == false){
+				console.log("found B");
+				fB = true;
+			}if(floorTypes[pixel] == "goal" && fG == false){
+				console.log("found G");
+				fG = true;
+			}
 		}
 		
 		return this;
@@ -37,8 +55,11 @@ Crafty.c("MapData", {
 		var color = this.getPixel(parseInt(x), parseInt(y));
 		var floorSpeeds = {
 			"black" : 1.0,
-			"white" : 0.5
+			"white" : 0.5,
+			"A" : 1.0,
+			"B" : 1.0,
+			"goal" : 1.0
 		};
-		return floorSpeeds[color]||0.1;
+		return floorSpeeds[color]||0.0;
 	}
 });
