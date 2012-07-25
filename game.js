@@ -13,11 +13,19 @@ window.onload = function() {
 Crafty.scene("loading_game", function() {
 	load = ["http://kauko.pingtimeout.net/track.png","http://kauko.pingtimeout.net/track_data.png"];
 	Crafty.load(load, function(){
+		//Crafty.scene("choose_track");
 		Crafty.scene("play");
 	});
 });
 
 Crafty.scene("choose_track", function() {});
+
+Crafty.scene("loading_track") function() {
+	load = ["derp"];
+	Crafty.load(load,function(){
+		Crafty.scene("play");
+	}
+});
 	
 Crafty.scene("play", function() {
 	CurrentMap = MapList[0];
