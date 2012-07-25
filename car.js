@@ -5,7 +5,15 @@ Crafty.c("Car", {
 		this._maxSpeed = 10;
 		this.rotation = 0;
 		this._handling = 1;
-		this.bind("EnterFrame", function() {
+		this.foo = 0;
+		this.bind("EnterFrame", function(e) {
+			
+			if(e.frame * 20 - this.foo > 1000){
+				this.foo = e.frame * 20;
+				var bar = new Date(this.foo);
+				console.log(bar.getSeconds() + "." + bar.getMilliseconds());
+			}
+			
 			var slide = 0;
 			
 			//forward
