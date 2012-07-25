@@ -10,6 +10,8 @@ window.onload = function() {
 	Crafty.scene("loading_game");
 };
 
+var trackIndex = 0;
+
 Crafty.scene("loading_game", function() {
 	load = ["http://kauko.pingtimeout.net/track.png","http://kauko.pingtimeout.net/track_data.png"];
 	Crafty.load(load, function(){
@@ -18,7 +20,10 @@ Crafty.scene("loading_game", function() {
 	});
 });
 
-Crafty.scene("choose_track", function() {});
+Crafty.scene("choose_track", function() {
+	//selector = Crafty.e("Selector").Selector();
+	menu = Crafty.e("TrackMenu, Selector").TrackMenu();
+});
 
 Crafty.scene("loading_track") function() {
 	load = ["derp"];
