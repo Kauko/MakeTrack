@@ -5,10 +5,10 @@ Crafty.c("TrackInfo", {
 	
 	TrackInfo : function(d){
 		this.info = {
-			entry1 : Crafty.e("SpriteFontWriter").SpriteFontWriter(230, 400),//.setContent(d.player1 + " : " + d.time1).writeText(),
-			entry2 : Crafty.e("SpriteFontWriter").SpriteFontWriter(260, 400),//.setContent(d.player2 + " : " + d.time2).writeText(),
-			entry3 : Crafty.e("SpriteFontWriter").SpriteFontWriter(290, 400),//.setContent(d.player3 + " : " + d.time3).writeText(),
-			name : Crafty.e("SpriteFontWriter").SpriteFontWriter(30,400)//.setContent(d.name).writeText()
+			entry1 : Crafty.e("SpriteFontWriter").SpriteFontWriter(400, 230),//.setContent(d.player1 + " : " + d.time1).writeText(),
+			entry2 : Crafty.e("SpriteFontWriter").SpriteFontWriter(400, 260),//.setContent(d.player2 + " : " + d.time2).writeText(),
+			entry3 : Crafty.e("SpriteFontWriter").SpriteFontWriter(400, 290),//.setContent(d.player3 + " : " + d.time3).writeText(),
+			name : Crafty.e("SpriteFontWriter").SpriteFontWriter(400,30)//.setContent(d.name).writeText()
 		};
 		
 		this.info.entry1.setContent(d.player1+ ":"+d.time1);
@@ -28,10 +28,10 @@ Crafty.c("TrackInfo", {
 	
 	updateTrackInfo : function(d){
 		this.info = {
-			entry1 : Crafty.e("SpriteFontWriter").SpriteFontWriter(230, 400).setContent(d.player1 + " : " + d.time1).writeText(),
-			entry2 : Crafty.e("SpriteFontWriter").SpriteFontWriter(260, 400).setContent(d.player2 + " : " + d.time2).writeText(),
-			entry3 : Crafty.e("SpriteFontWriter").SpriteFontWriter(290, 400).setContent(d.player3 + " : " + d.time3).writeText(),
-			name : Crafty.e("SpriteFontWriter").SpriteFontWriter(30,400).setContent(d.name).writeText()
+			entry1 : Crafty.e("SpriteFontWriter").SpriteFontWriter(400, 230),
+			entry2 : Crafty.e("SpriteFontWriter").SpriteFontWriter(400, 260),
+			entry3 : Crafty.e("SpriteFontWriter").SpriteFontWriter(400, 290),
+			name : Crafty.e("SpriteFontWriter").SpriteFontWriter(400,30)
 		};
 		
 		

@@ -19,10 +19,9 @@ Crafty.c("TrackList", {
 		
 		this.bind("SelectorMoved", function(e){
 			this.tracks[e.index].highlight();
-			updatePreview(this.tracks[e.index].getInfo());
 		});
 		
-		this.bind("this.trackselected", function(e){
+		this.bind("TrackSelected", function(e){
 			selectedTrack = this.tracks[e.index].getTrackName();
 			Crafty.scene("loading_track");
 		});

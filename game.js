@@ -10,20 +10,21 @@ window.onload = function() {
 	Crafty.scene("loading_game");
 };
 
+var selectedTrack = ""; //name of track
+
 Crafty.scene("loading_game", function() {
 	load = ["http://kauko.pingtimeout.net/track.png","http://kauko.pingtimeout.net/track_data.png"];
 	Crafty.load(load, function(){
 		Crafty.scene("choose_track");
-		//Crafty.scene("play");
 	});
 });
 
 Crafty.scene("choose_track", function() {
-	Crafty.background("http://placehold.it/640/480");
-	trackMenu = Crafty.e("Selector, TrackList").Selector().TrackList();
+	Crafty.background("rgb(0,0,0)");
+	trackMenu = Crafty.e("Selector, TrackList").Selector(0).TrackList();
 	var data = trackMenu.getTrackInfo(trackMenu.getSelectorIndex());
 	preview = Crafty.e("Thumbnail, TrackInfo")
-		.attr({x: 100, y:400})
+		.attr({x: 400, y:130})
 		.Thumbnail(data)
 		.TrackInfo(data)
 		.bind("SelectorMoved", function(e){
@@ -34,6 +35,7 @@ Crafty.scene("choose_track", function() {
 });
 
 Crafty.scene("loading_track", function() {
+	//Use selectedTrack (name of selected track)
 	load = [];
 	Crafty.load(load,function(){
 		Crafty.scene("play");

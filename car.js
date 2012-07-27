@@ -60,25 +60,22 @@ Crafty.c("Car", {
 			}
 			
 			if(Crafty((Crafty("MapData"))[0]).getPixel(parseInt(this.x),parseInt(this.y)) == "A" || Crafty((Crafty("MapData"))[0]).getPixel(parseInt(this.x),parseInt(this.y)) == "B"){
-				console.log("on point");
+				//console.log("on point");
 				if(Crafty((Crafty("MapData"))[0]).getPixel(parseInt(this.x),parseInt(this.y)) != this.previousCheckpoint){
-					console.log("point was new");
+					//console.log("point was new");
 					this.previousCheckpoint = Crafty((Crafty("MapData"))[0]).getPixel(parseInt(this.x),parseInt(this.y));
 					this.checkpointsPassed++;
 					if(Crafty((Crafty("Map"))[0]).getNumberOfCheckpoints() - this.checkpointsPassed == 0){
-						console.log("get to tha choppa!");
+						//console.log("get to tha choppa!");
 						this.goalEnabled = true;
 					}
 				}
 			}
 			
-			/*if(Crafty((Crafty("MapData"))[0]).getPixel(this.x,this.y) != undefined){
-				console.log(Crafty((Crafty("MapData"))[0]).getPixel(this.x,this.y));
-			}*/
 			
 			if(Crafty((Crafty("MapData"))[0]).getPixel(parseInt(this.x),parseInt(this.y)) == "goal" && this.goalEnabled == true){
-				//Crafty.scene("race_over");
-				console.log("you win");
+				Crafty.scene("race_over");
+				//console.log("you win");
 			}
 			
 			this.x += Math.sin(this._rotation * Math.PI / 180) * this._speed;

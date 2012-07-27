@@ -8,9 +8,7 @@ Crafty.c("MapData", {
 		var context = Crafty.canvas.context;
 		context.drawImage(Crafty.asset(url), 0, 0);
 		this._imgd = context.getImageData(0, 0, 640, 480);
-		console.log(this._imgd);
 		var data = this._imgd.data;
-		console.log(data);
 		var amt = this._imgd.width * this._imgd.height;
 		var floorTypes = {
 			0 : "black",
@@ -28,16 +26,6 @@ Crafty.c("MapData", {
 			
 			pixel = data[pos] * 65536 + data[pos+1] * 256 + data[pos+2];
 			this._floor[i] = floorTypes[pixel];
-			if(floorTypes[pixel] == "A" && fA == false){
-				console.log("found A");
-				fA = true;
-			}if(floorTypes[pixel] == "B" && fB == false){
-				console.log("found B");
-				fB = true;
-			}if(floorTypes[pixel] == "goal" && fG == false){
-				console.log("found G");
-				fG = true;
-			}
 		}
 		
 		return this;

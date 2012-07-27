@@ -7,7 +7,7 @@ Crafty.c("Selector", {
 		this.max = i;
 		this.trackIndex = 0;
 		this.bind("EnterFrame", function(){
-			if(this.isDown(Crafty.keys.W) || this.isDown(Crafty.keys.Up)){
+			if(this.isDown(Crafty.keys.W) || this.isDown(Crafty.keys.UP_ARROW)){
 				if(this.trackIndex == 0)
 					this.trackIndex = this.max;
 				else
@@ -16,18 +16,17 @@ Crafty.c("Selector", {
 				Crafty.trigger("SelectorMoved", {index : this.trackIndex});
 			}
 			
-			if(this.isDown(Crafty.keys.S) || this.isDown(Crafty.keys.Down)){
+			if(this.isDown(Crafty.keys.S) || this.isDown(Crafty.keys.DOWN_ARROW)){
 				if(this.trackIndex == this.max)
 					this.trackIndex = 0;
 				else
 					this.trackIndex++;
-					
+				
 				Crafty.trigger("SelectorMoved", {index : this.trackIndex});
 			}
 			
-			if(this.isDown(Crafty.keys.Space)){
+			if(this.isDown(Crafty.keys.SPACE)){
 				Crafty.trigger("TrackSelected", {index : this.trackIndex});
-				//Crafty.scene("loading_track");
 			}
 		});
 		return this;
