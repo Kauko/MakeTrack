@@ -28,7 +28,7 @@ Crafty.c("TrackListEntry", {
 				player1 : this.player1,
 				player2 : this.player2,
 				player3 : this.player3,
-				trackName : this.name
+				name : this.name
 				};
 	}
 })
