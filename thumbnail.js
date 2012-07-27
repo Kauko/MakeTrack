@@ -1,4 +1,4 @@
-Crafty.c("Thumbnail" function() {
+Crafty.c("Thumbnail", {
 	init : function(){
 		this.requires("2D, Canvas, Image");
 	},

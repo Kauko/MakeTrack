@@ -1,13 +1,11 @@
-Crafty.c("Selector", function(){
-	this.max = i;
-	this.trackIndex;
-	
+Crafty.c("Selector", {
 	init : function() {
 		this.requires("Keyboard");
 	},
 	
 	Selector : function(i) {
-		
+		this.max = i;
+		this.trackIndex = 0;
 		this.bind("EnterFrame", function(){
 			if(this.isDown(Crafty.keys.W) || this.isDown(Crafty.keys.Up)){
 				if(this.trackIndex == 0)

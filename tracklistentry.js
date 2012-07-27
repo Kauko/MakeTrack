@@ -1,12 +1,5 @@
-Crafty.c("TrackListEntry", function(){
-	this.thumbnail = "http://placehold.it/64/48";
-	this.time1 = 99:99:99;
-	this.time2 = 99:99:99;
-	this.time3 = 99:99:99;
-	this.player1 = "Hank";
-	this.player2 = "Hank";
-	this.player3 = "Hank";
-	this.name = "Placeholder";
+Crafty.c("TrackListEntry", {
+	
 	init : function(){
 	},
 	
@@ -19,6 +12,7 @@ Crafty.c("TrackListEntry", function(){
 		this.player2 = t.player2;
 		this.player3 = t.player3;
 		this.name = t.name;
+		return this;
 	},
 	
 	getTrackName : function(){
@@ -31,7 +25,7 @@ Crafty.c("TrackListEntry", function(){
 				time1 : this.time1,
 				time2 : this.time2,
 				time3 : this.time3,
-				player1 : this.player1;
+				player1 : this.player1,
 				player2 : this.player2,
 				player3 : this.player3,
 				trackName : this.name

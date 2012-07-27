@@ -33,11 +33,11 @@ Crafty.scene("choose_track", function() {
 		});
 });
 
-Crafty.scene("loading_track") function() {
+Crafty.scene("loading_track", function() {
 	load = [];
 	Crafty.load(load,function(){
 		Crafty.scene("play");
-	}
+	});
 });
 	
 Crafty.scene("play", function() {
