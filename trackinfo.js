@@ -3,8 +3,8 @@ Crafty.c("TrackInfo", {
 		
 	},
 	
-	TrackInfo : function(d){
-		this.info = {
+	TrackInfo : function(){
+		/*this.info = {
 			entry1 : Crafty.e("SpriteFontWriter").SpriteFontWriter(400, 230),//.setContent(d.player1 + " : " + d.time1).writeText(),
 			entry2 : Crafty.e("SpriteFontWriter").SpriteFontWriter(400, 260),//.setContent(d.player2 + " : " + d.time2).writeText(),
 			entry3 : Crafty.e("SpriteFontWriter").SpriteFontWriter(400, 290),//.setContent(d.player3 + " : " + d.time3).writeText(),
@@ -21,7 +21,7 @@ Crafty.c("TrackInfo", {
 		this.info.entry3.writeText();
 	
 		this.info.name.setContent(d.name);
-		this.info.name.writeText();
+		this.info.name.writeText();*/
 		
 		return this;
 	},

@@ -4,10 +4,10 @@ Crafty.c("Selector", {
 	},
 	
 	Selector : function(i) {
-		this.max = i;
+		this.max = this.getListLength()-1;
 		this.trackIndex = 0;
-		this.bind("EnterFrame", function(){
-			if(this.isDown(Crafty.keys.W) || this.isDown(Crafty.keys.UP_ARROW)){
+		this.bind("KeyDown", function(e){
+			if(e.keyCode == Crafty.keys.W || e.keyCode == Crafty.keys.UP_ARROW){
 				if(this.trackIndex == 0)
 					this.trackIndex = this.max;
 				else
@@ -16,7 +16,7 @@ Crafty.c("Selector", {
 				Crafty.trigger("SelectorMoved", {index : this.trackIndex});
 			}
 			
-			if(this.isDown(Crafty.keys.S) || this.isDown(Crafty.keys.DOWN_ARROW)){
+			if(e.keyCode == Crafty.keys.S || e.keyCode == Crafty.keys.DOWN_ARROW){
 				if(this.trackIndex == this.max)
 					this.trackIndex = 0;
 				else
@@ -25,7 +25,7 @@ Crafty.c("Selector", {
 				Crafty.trigger("SelectorMoved", {index : this.trackIndex});
 			}
 			
-			if(this.isDown(Crafty.keys.SPACE)){
+			if(e.keyCode == Crafty.keys.SPACE){
 				Crafty.trigger("TrackSelected", {index : this.trackIndex});
 			}
 		});

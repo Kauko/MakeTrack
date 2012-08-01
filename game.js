@@ -11,8 +11,22 @@ window.onload = function() {
 };
 
 var selectedTrack = ""; //handle of track
+var trackData = {};
+var trackList = [];
+
+updatePreview = function(response){
+	preview.updateThumbnail(response);
+	preview.updateTrackInfo(response);
+}
+
+playTrack = function(response) {
+	console.log(response);
+	trackData = response; 
+	Crafty.scene("loading_track"); 
+}
 
 Crafty.scene("loading_game", function() {
+	//Something like backgrounds, menu sounds..?
 	load = ["http://kauko.pingtimeout.net/track.png","http://kauko.pingtimeout.net/track_data.png"];
 	Crafty.load(load, function(){
 		Crafty.scene("choose_track");
@@ -21,34 +35,41 @@ Crafty.scene("loading_game", function() {
 
 Crafty.scene("choose_track", function() {
 	Crafty.background("rgb(0,0,0)");
-	trackMenu = Crafty.e("Selector, TrackList").Selector(0).TrackList();
-	var data = trackMenu.getTrackPreviewData(trackMenu.getSelectorIndex());
+	trackMenu = Crafty.e("Selector, TrackList").TrackList().Selector();
 	preview = Crafty.e("Thumbnail, TrackInfo")
 		.attr({x: 400, y:130})
-		.Thumbnail(data)
-		.TrackInfo(data)
 		.bind("SelectorMoved", function(e){
-			var data = trackMenu.getTrackPreviewData(e.index);
-			this.updateThumbnail(data);
-			this.updateTrackInfo(data);
+			trackMenu.getTrackPreviewData(e.index);
 		})
 		.bind("TrackSelected",function(e){
-			var data = trackMenu.getTrackPreviewData(e.index);
-			selectedTrack = data.handle;
-			Crafty.scene("loading_track");
+			console.log("track selected!");
+			selectedTrack = trackMenu.getId(trackMenu.getSelectorIndex());
+			console.log(selectedTrack);
+			Crafty.scene("fetching_track");	
 		});
+		
+	trackMenu.getTrackPreviewData(trackMenu.getSelectorIndex());
+});
+
+Crafty.scene("fetching_track", function(){
+	console.log("fetching");
+	requestTrackData(playTrack, selectedTrack);
+	trackMenu.destroy();
+	preview.destroy();
 });
 
 Crafty.scene("loading_track", function() {
-	//Use selectedTrack (name of selected track)
-	load = [];
+	console.log("loading");
+	load = [trackData.bg, trackData.data];
+	console.log(load);
 	Crafty.load(load,function(){
 		Crafty.scene("play");
 	});
 });
 	
 Crafty.scene("play", function() {
-	CurrentMap = MapList[0];
+	console.log("play");
+	CurrentMap = trackData;
 	mapdata = Crafty.e("MapData").MapData(CurrentMap.data);
 	texture = Crafty.e("Map").Map(CurrentMap);		
 	car = Crafty.e("2D, Canvas, car_player, Car, Keyboard")

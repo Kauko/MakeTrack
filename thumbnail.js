@@ -3,12 +3,12 @@ Crafty.c("Thumbnail", {
 		this.requires("2D, Canvas, Image");
 	},
 	
-	Thumbnail : function(d){
-		this.image(d.thumbnail);
+	Thumbnail : function(){
 		return this;
 	},
 	
 	updateThumbnail : function(d){
+		console.log(d);
 		this.image(d.thumbnail);
 	}
 })
