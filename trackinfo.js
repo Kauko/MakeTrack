@@ -11,13 +11,13 @@ Crafty.c("TrackInfo", {
 			name : Crafty.e("SpriteFontWriter").SpriteFontWriter(400,30)//.setContent(d.name).writeText()
 		};
 		
-		this.info.entry1.setContent(d.player1+ ":"+d.time1);
+		this.info.entry1.setContent(d.records[0].name + ":" + d.records[0].time);
 		this.info.entry1.writeText();
 		
-		this.info.entry2.setContent(d.player2+ ":"+d.time2);
+		this.info.entry2.setContent(d.records[1].name + ":" + d.records[1].time);
 		this.info.entry2.writeText();
 		
-		this.info.entry3.setContent(d.player3+ ":"+d.time3);
+		this.info.entry3.setContent(d.records[2].name + ":" + d.records[2].time);
 		this.info.entry3.writeText();
 	
 		this.info.name.setContent(d.name);
@@ -35,15 +35,15 @@ Crafty.c("TrackInfo", {
 		};
 		
 		
-		this.info.entry1.setContent(d.player1+ ":"+d.time1);
+		this.info.entry1.setContent(d.records[0].name + ":" + d.records[0].time);
 		this.info.entry1.writeText();
 		
-		this.info.entry2.setContent(d.player2+ ":"+d.time2);
+		this.info.entry2.setContent(d.records[1].name + ":" + d.records[1].time);
 		this.info.entry2.writeText();
 		
-		this.info.entry3.setContent(d.player3+ ":"+d.time3);
+		this.info.entry3.setContent(d.records[2].name + ":" + d.records[2].time);
 		this.info.entry3.writeText();
-		
+	
 		this.info.name.setContent(d.name);
 		this.info.name.writeText();
 	}

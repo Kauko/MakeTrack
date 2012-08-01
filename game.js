@@ -10,7 +10,7 @@ window.onload = function() {
 	Crafty.scene("loading_game");
 };
 
-var selectedTrack = ""; //name of track
+var selectedTrack = ""; //handle of track
 
 Crafty.scene("loading_game", function() {
 	load = ["http://kauko.pingtimeout.net/track.png","http://kauko.pingtimeout.net/track_data.png"];
@@ -22,15 +22,20 @@ Crafty.scene("loading_game", function() {
 Crafty.scene("choose_track", function() {
 	Crafty.background("rgb(0,0,0)");
 	trackMenu = Crafty.e("Selector, TrackList").Selector(0).TrackList();
-	var data = trackMenu.getTrackInfo(trackMenu.getSelectorIndex());
+	var data = trackMenu.getTrackPreviewData(trackMenu.getSelectorIndex());
 	preview = Crafty.e("Thumbnail, TrackInfo")
 		.attr({x: 400, y:130})
 		.Thumbnail(data)
 		.TrackInfo(data)
 		.bind("SelectorMoved", function(e){
-			var data = trackMenu.getTrackInfo(e.index);
+			var data = trackMenu.getTrackPreviewData(e.index);
 			this.updateThumbnail(data);
 			this.updateTrackInfo(data);
+		})
+		.bind("TrackSelected",function(e){
+			var data = trackMenu.getTrackPreviewData(e.index);
+			selectedTrack = data.handle;
+			Crafty.scene("loading_track");
 		});
 });
 
