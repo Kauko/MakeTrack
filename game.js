@@ -13,6 +13,7 @@ window.onload = function() {
 var selectedTrack = ""; //handle of track
 var trackData = {};
 var trackList = [];
+var racetime = 0;
 
 updatePreview = function(response){
 	preview.updateThumbnail(response);
@@ -71,7 +72,13 @@ Crafty.scene("play", function() {
 	console.log("play");
 	CurrentMap = trackData;
 	mapdata = Crafty.e("MapData").MapData(CurrentMap.data);
-	texture = Crafty.e("Map").Map(CurrentMap);		
+	texture = Crafty.e("Map").Map(CurrentMap);
+	stopwatch = Crafty.e("SpriteFontWriter").SpriteFontWriter(5,15)
+		.bind("EnterFrame", function(){
+			var time = new Date(racetime);
+			this.setContent(time.getSeconds() + ":" + time.getMilliseconds());
+			this.writeText();
+		});
 	car = Crafty.e("2D, Canvas, car_player, Car, Keyboard")
 		.origin("center")
 		.attr({x: 100, y: 100})
@@ -79,5 +86,10 @@ Crafty.scene("play", function() {
 });
 	
 Crafty.scene("race_over", function() {
+	mapdata.destroy();
+	texture.destroy();
+	car.destroy();
+	
+	
 
 });
