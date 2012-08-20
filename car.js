@@ -12,8 +12,6 @@ Crafty.c("Car", {
 		
 		this.bind("EnterFrame", function(e) {
 			
-			racetime = e.frame * 20;
-			
 			/*if(e.frame * 20 - this.foo > 1000){
 				this.foo = e.frame * 20;
 				var bar = new Date(this.foo);
