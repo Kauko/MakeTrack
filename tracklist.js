@@ -19,6 +19,7 @@ Crafty.c("TrackList", {
 		for(var i in trackDataList){
 			this.tracks.push(Crafty.e("TrackListEntry, SpriteFontWriter").TrackListEntry(trackDataList[i]).SpriteFontWriter(5,i*10+5));
 			this.tracks[i].setContent(this.tracks[i].getTrackName());
+			this.tracks[i].eraseText();
 			this.tracks[i].writeText();
 		};
 	},

@@ -36,15 +36,19 @@ Crafty.c("TrackInfo", {
 		
 		
 		this.info.entry1.setContent(d.records[0].name + ":" + d.records[0].time);
+		this.info.entry1.eraseText();
 		this.info.entry1.writeText();
 		
 		this.info.entry2.setContent(d.records[1].name + ":" + d.records[1].time);
+		this.info.entry2.eraseText();
 		this.info.entry2.writeText();
 		
 		this.info.entry3.setContent(d.records[2].name + ":" + d.records[2].time);
+		this.info.entry3.eraseText();
 		this.info.entry3.writeText();
 	
 		this.info.name.setContent(d.name);
+		this.info.name.eraseText();
 		this.info.name.writeText();
 	}
 })
