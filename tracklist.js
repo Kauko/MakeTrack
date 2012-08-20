@@ -9,19 +9,27 @@ Crafty.c("TrackList", {
 		requestTrackList(this);
 		
 		this.bind("SelectorMoved", function(e){
-			this.tracks[e.index].highlight();
+			for(var i in this.tracks){
+				if(i == e.index){
+					this.tracks[i].highlight();
+				}else{
+					this.tracks[i].dehighlight();
+				}
+			}
 		});
 		
 		return this;
 	},
 	
 	listResponseHandler: function(trackDataList) {
+		console.log("e");
 		for(var i in trackDataList){
 			this.tracks.push(Crafty.e("TrackListEntry, SpriteFontWriter").TrackListEntry(trackDataList[i]).SpriteFontWriter(5,i*10+5));
 			this.tracks[i].setContent(this.tracks[i].getTrackName());
 			this.tracks[i].eraseText();
 			this.tracks[i].writeText();
 		};
+		this.tracks[0].highlight();
 	},
 	
 	getListLength : function(){

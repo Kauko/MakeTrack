@@ -69,15 +69,22 @@ Crafty.scene("loading_track", function() {
 });
 	
 Crafty.scene("play", function() {
+	var prevTime = -2000;
 	console.log("play");
 	CurrentMap = trackData;
 	mapdata = Crafty.e("MapData").MapData(CurrentMap.data);
 	texture = Crafty.e("Map").Map(CurrentMap);
 	stopwatch = Crafty.e("SpriteFontWriter").SpriteFontWriter(5,15)
-		.bind("EnterFrame", function(){
+		.bind("EnterFrame", function(e){
+			racetime = e.frame * 20;
 			var time = new Date(racetime);
-			this.setContent(time.getSeconds() + ":" + time.getMilliseconds());
-			this.writeText();
+			if(time - prevTime > 1000){
+				this.eraseText();
+				this.setContent(time.getSeconds() + ":" + time.getMilliseconds());
+				this.writeText();
+				prevTime = time;
+			}
+			
 		});
 	car = Crafty.e("2D, Canvas, car_player, Car, Keyboard")
 		.origin("center")

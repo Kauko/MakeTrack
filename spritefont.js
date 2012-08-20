@@ -40,6 +40,7 @@ Crafty.c("SpriteFontWriter", {
 	_length: 0, 
 	_x: 0, 
 	_y: 0, 
+	_moved: false,
 	__characters: [], 
 	
 	SpriteFontWriter: function(x, y) {
@@ -55,11 +56,26 @@ Crafty.c("SpriteFontWriter", {
 	},
 	
 	highlight : function() {
-		if (this._lenght > 0 ){
+		console.log("higlith");
+		if (this._length > 0 ){
 			this.eraseText();
 			this.writeText();
 			for (var i in this.__characters) {
 				this.__characters[i].moveX(15); 
+			}
+			this._moved = true;
+			
+		}
+	},
+	
+	dehighlight : function() {
+		console.log("de");
+		if (this._length > 0 && this._moved){
+			this.eraseText();
+			this.writeText();
+			console.log("dede");
+			for (var i in this.__characters) {
+				this.__characters[i].moveX(0); 
 			}
 		}
 	},
