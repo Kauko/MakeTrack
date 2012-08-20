@@ -25,7 +25,7 @@ Crafty.c("Car", {
 			//forward
 			if(this.isDown(Crafty.keys.W)){
 				this._speed += this._acceleration* Crafty((Crafty("MapData"))[0]).getSpeed(this.x, this.y);
-				//console.log(Crafty((Crafty("MapData"))[0]).getSpeed(this.x, this.y));
+				console.log(Crafty((Crafty("MapData"))[0]).getSpeed(this.x, this.y));
 			}
 			
 			//decay speed

@@ -28,7 +28,7 @@ playTrack = function(response) {
 
 Crafty.scene("loading_game", function() {
 	//Something like backgrounds, menu sounds..?
-	load = ["http://kauko.pingtimeout.net/track.png","http://kauko.pingtimeout.net/track_data.png"];
+	load = ["http://kauko.pingtimeout.net/Maketrack/track.png","http://kauko.pingtimeout.net/Maketrack/track_data.png"];
 	Crafty.load(load, function(){
 		Crafty.scene("choose_track");
 	});

@@ -7,7 +7,7 @@ requestTrackPreview = function(trackId) {
 }
 
 requestTrackData = function(trackId) {
-	playTrack({"bg":"http://kauko.pingtimeout.net/track.png","data":"http://kauko.pingtimeout.net/track_data.png","checkpoints":3}); 
+	playTrack({"bg":"http://kauko.pingtimeout.net/Maketrack/track.png","data":"http://kauko.pingtimeout.net/Maketrack/track_data.png","checkpoints":3}); 
 }
 
 saveTrackRecord = function(context, trackId, playerName, recordTime) {
