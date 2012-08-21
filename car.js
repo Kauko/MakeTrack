@@ -1,14 +1,15 @@
 Crafty.c("Car", {
 	Car : function(){
 		this._speed = 0;
-		this._acceleration = 1;
-		this._maxSpeed = 10;
+		this._acceleration = 0.5;
+		this._brakes = 0.9
+		this._maxSpeed = 7;
 		this.rotation = 0;
-		this._handling = 1;
-		//this.foo = 0;
+		this._handling = 3;
 		this._previousCheckpoint = "";
 		this.checkpointsPassed = 0;
 		this.goalEnabled = false;
+		this.reverseCounter = 0;
 		
 		this.bind("EnterFrame", function(e) {
 			
@@ -19,35 +20,65 @@ Crafty.c("Car", {
 			}*/
 			
 			var slide = 0;
+			var bHandbrake = false;
 			
 			//forward
 			if(this.isDown(Crafty.keys.W)){
-				this._speed += this._acceleration* Crafty((Crafty("MapData"))[0]).getSpeed(this.x, this.y);
-				console.log(Crafty((Crafty("MapData"))[0]).getSpeed(this.x, this.y));
+				this.reverseCounter = 0;
+				if(this._speed > 1)
+					this._speed += this._acceleration / this._speed;// * Crafty((Crafty("MapData"))[0]).getSpeed(this.x, this.y);
+				else
+					this._speed += this._acceleration;// * Crafty((Crafty("MapData"))[0]).getSpeed(this.x, this.y);
 			}
 			
 			//decay speed
-			this._speed = this._speed * 0.98;
+			this._speed = this._speed * 0.98;// * Crafty((Crafty("MapData"))[0]).getSpeed(this.x, this.y);
 		
 			//reverse
 			if(this.isDown(Crafty.keys.S)){
-				this._speed -= this._acceleration;
+				if(this._speed == 0 && this.reverseCounter < 10)
+					this.reverseCounter++;
+				if(this._speed > 1){
+					var foo = this._brakes / this._speed;
+					if(foo < 0.4)
+						foo = 0.4;
+					this._speed -= foo;
+					if(this._speed < 0 && this.reverseCounter < 10)
+						this._speed = 0;
+				}else{
+					this._speed -= this._brakes;
+					if(this._speed < 0 && this.reverseCounter < 10)
+						this._speed = 0;
+				}
 			}
 			
 			//handbrake
 			if(this.isDown(Crafty.keys.SPACE)){
-				this._speed -= this._speed / 20;
-				if(this._speed > this._maxSpeed / 2) 
-					slide = this._speed * 0.8;
+				this._speed -= this._speed / 10;
+				//if(this._speed > this._maxSpeed / 2) 
+				slide = 0.2;
+				bHandbrake = true;
 			}
 			
 			//turning
-			if(this.isDown(Crafty.keys.A)) {				
-				this.rotation -= this._speed * this._handling + slide;
+			if(this.isDown(Crafty.keys.A)) {
+				if(this._speed >= 1){
+					slide += this._speed * this._speed / this._maxSpeed;
+					//slide = slide * slide;
+				}
+				if(slide < 1 && !bHandbrake)
+					slide = 1;
+				this.rotation -= this._speed * this._handling / slide;
 			}
 				
 			if(this.isDown(Crafty.keys.D)) {
-				this.rotation += this._speed * this._handling + slide;
+				if(this._speed >= 1){
+					slide += this._speed * this._speed / this._maxSpeed;
+					//slide = slide * slide;
+				}
+				if(slide < 1 && !bHandbrake)
+					slide = 1;
+				this.rotation += this._speed * this._handling / slide;
 			}
 				
 			//cap the values of the car
