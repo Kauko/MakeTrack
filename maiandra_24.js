@@ -1,4 +1,4 @@
-﻿Crafty.sprite(1, "maiandra_24_white.png", {
+Crafty.sprite(1, "/spritefonts/maiandra_24_white.png", {
 	c64: [0,0,20,23],
 	c65: [20,0,16,23],
 	c66: [36,0,12,23],

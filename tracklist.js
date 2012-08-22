@@ -22,6 +22,8 @@ Crafty.c("TrackList", {
 			this.tracks[i].eraseText();
 			this.tracks[i].writeText();
 		};
+		this.enableSelector(); 
+		this.getTrackPreviewData(0);
 	},
 	
 	getListLength : function(){

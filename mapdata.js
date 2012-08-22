@@ -5,6 +5,7 @@ Crafty.c("MapData", {
 	},
 
 	MapData: function(url) {
+		console.log(url);
 		var context = Crafty.canvas.context;
 		context.drawImage(Crafty.asset(url), 0, 0);
 		this._imgd = context.getImageData(0, 0, 640, 480);

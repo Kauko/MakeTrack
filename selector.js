@@ -4,12 +4,16 @@ Crafty.c("Selector", {
 	},
 	
 	Selector : function(i) {
+		return this;
+	},
+ 
+ 	enableSelector: function() {
 		this.max = this.getListLength()-1;
 		this.trackIndex = 0;
 		this.bind("KeyDown", function(e){
 			if(e.keyCode == Crafty.keys.W || e.keyCode == Crafty.keys.UP_ARROW){
 				if(this.trackIndex == 0)
-					this.trackIndex = this.max;
+				this.trackIndex = this.max;
 				else
 					this.trackIndex--;
 					
@@ -18,7 +22,7 @@ Crafty.c("Selector", {
 			
 			if(e.keyCode == Crafty.keys.S || e.keyCode == Crafty.keys.DOWN_ARROW){
 				if(this.trackIndex == this.max)
-					this.trackIndex = 0;
+				this.trackIndex = 0;
 				else
 					this.trackIndex++;
 				
@@ -29,9 +33,8 @@ Crafty.c("Selector", {
 				Crafty.trigger("TrackSelected", {index : this.trackIndex});
 			}
 		});
-		return this;
-	},
-	
+	}, 		
+ 
 	getSelectorIndex : function(){
 		return this.trackIndex;
 	}

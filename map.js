@@ -28,7 +28,7 @@ Crafty.c("Map", {
 		this.z = -2;
 	},
 	Map: function(map) {
-		this.image(map.bg);
+		this.image("/tracks/texture/" + map + ".png");
 		this.numCheckpoints = map.checkpoints;
 		return this;
 	},
