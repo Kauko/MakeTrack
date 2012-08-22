@@ -26,6 +26,22 @@ playTrack = function(response) {
 	Crafty.scene("loading_track"); 
 }
 
+showRecordForm = function(response) {
+	document.getElementById("recordform").innerHTML = response; 
+}	
+
+submitRecord = function() {
+	trackid = document.getElementById("trackid").value; 
+	record = document.getElementById("record").value; 
+	player = document.getElementById("name").value; 
+	saveTrackRecord(trackid, player, record); 
+}
+
+returnToMenu = function() {
+	Crafty.scene("choose_track"); 
+}	
+		
+
 Crafty.scene("loading_game", function() {
 	//Something like backgrounds, menu sounds..?
 	load = ["http://kauko.pingtimeout.net/Maketrack/track.png","http://kauko.pingtimeout.net/Maketrack/track_data.png"];
@@ -49,19 +65,19 @@ Crafty.scene("choose_track", function() {
 			Crafty.scene("fetching_track");	
 		});
 		
-	trackMenu.getTrackPreviewData(trackMenu.getSelectorIndex());
+	//trackMenu.getTrackPreviewData(trackMenu.getSelectorIndex());
 });
 
 Crafty.scene("fetching_track", function(){
 	console.log("fetching");
-	requestTrackData(playTrack, selectedTrack);
+	requestTrackData(selectedTrack);
 	trackMenu.destroy();
 	preview.destroy();
 });
 
 Crafty.scene("loading_track", function() {
 	console.log("loading");
-	load = [trackData.bg, trackData.data];
+	load = ["/tracks/texture/" + trackData.handle + ".png", "/tracks/mapdata/" + trackData.handle + ".png"];
 	console.log(load);
 	Crafty.load(load,function(){
 		Crafty.scene("play");
@@ -72,8 +88,8 @@ Crafty.scene("play", function() {
 	var prevTime = -2000;
 	console.log("play");
 	CurrentMap = trackData;
-	mapdata = Crafty.e("MapData").MapData(CurrentMap.data);
-	texture = Crafty.e("Map").Map(CurrentMap);
+	mapdata = Crafty.e("MapData").MapData("/tracks/mapdata/" + CurrentMap.handle + ".png");
+	texture = Crafty.e("Map").Map(CurrentMap.handle);
 	stopwatch = Crafty.e("SpriteFontWriter").SpriteFontWriter(5,15)
 		.bind("EnterFrame", function(e){
 			racetime = e.frame * 20;
@@ -96,7 +112,5 @@ Crafty.scene("race_over", function() {
 	mapdata.destroy();
 	texture.destroy();
 	car.destroy();
-	
-	
-
+	requestRecordForm(/*trackid, recordtime*/)
 });

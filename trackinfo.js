@@ -35,15 +35,30 @@ Crafty.c("TrackInfo", {
 		};
 		
 		
-		this.info.entry1.setContent(d.records[0].name + ":" + d.records[0].time);
+		if (d.records.length > 0) {
+			this.info.entry1.setContent(d.records[0].name + ":" + d.records[0].time);
+		}
+		else {
+			this.info.entry1.setContent("")
+		}
 		this.info.entry1.eraseText();
 		this.info.entry1.writeText();
 		
-		this.info.entry2.setContent(d.records[1].name + ":" + d.records[1].time);
+		if (d.records.length > 1) {
+			this.info.entry2.setContent(d.records[1].name + ":" + d.records[1].time);
+		}
+		else {
+			this.info.entry2.setContent("")
+		}		
 		this.info.entry2.eraseText();
 		this.info.entry2.writeText();
 		
-		this.info.entry3.setContent(d.records[2].name + ":" + d.records[2].time);
+		if (d.records.length > 2) {
+			this.info.entry3.setContent(d.records[2].name + ":" + d.records[2].time);
+		}
+		else {
+			this.info.entry3.setContent("")
+		}		
 		this.info.entry3.eraseText();
 		this.info.entry3.writeText();
 	

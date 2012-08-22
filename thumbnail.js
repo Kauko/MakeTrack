@@ -8,7 +8,6 @@ Crafty.c("Thumbnail", {
 	},
 	
 	updateThumbnail : function(d){
-		console.log(d);
-		this.image(d.thumbnail);
+		this.image("/tracks/thumb/" + d.handle + ".png");
 	}
 })
