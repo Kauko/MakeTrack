@@ -56,7 +56,6 @@ Crafty.c("SpriteFontWriter", {
 	},
 	
 	highlight : function() {
-		console.log("higlith");
 		if (this._length > 0 ){
 			this.eraseText();
 			this.writeText();
@@ -69,11 +68,9 @@ Crafty.c("SpriteFontWriter", {
 	},
 	
 	dehighlight : function() {
-		console.log("de");
 		if (this._length > 0 && this._moved){
 			this.eraseText();
 			this.writeText();
-			console.log("dede");
 			for (var i in this.__characters) {
 				this.__characters[i].moveX(0); 
 			}
@@ -88,7 +85,7 @@ Crafty.c("SpriteFontWriter", {
 		}
 	}, 
 	
-	eraseText: function() {		
+	eraseText: function() {
 		for (var i = this.__characters.length - 1; i >= 0; i--) {
 			this.__characters[i].destroy(); 
 		}

@@ -5,10 +5,9 @@ Crafty.c("MapData", {
 	},
 
 	MapData: function(url) {
-		console.log(url);
 		var context = Crafty.canvas.context;
 		context.drawImage(Crafty.asset(url), 0, 0);
-		this._imgd = context.getImageData(0, 0, 640, 480);
+		this._imgd = context.getImageData(0, 0, 1280, 720);
 		var data = this._imgd.data;
 		var amt = this._imgd.width * this._imgd.height;
 		var floorTypes = {
@@ -49,6 +48,6 @@ Crafty.c("MapData", {
 			"B" : 1.0,
 			"goal" : 1.0
 		};
-		return floorSpeeds[color]||0.0;
+		return floorSpeeds[color]||1.0;
 	}
 });

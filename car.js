@@ -1,41 +1,50 @@
 Crafty.c("Car", {
-	Car : function(){
+	Car : function(dir){
 		this._speed = 0;
 		this._acceleration = 0.5;
 		this._brakes = 0.9
 		this._maxSpeed = 7;
-		this.rotation = 0;
+		this.rotation = dir;
 		this._handling = 3;
 		this._previousCheckpoint = "";
 		this.checkpointsPassed = 0;
 		this.goalEnabled = false;
 		this.reverseCounter = 0;
+		this.offroadCounter = 1;
 		
 		this.bind("EnterFrame", function(e) {
 			
-			/*if(e.frame * 20 - this.foo > 1000){
-				this.foo = e.frame * 20;
-				var bar = new Date(this.foo);
-				//console.log(bar.getSeconds() + "." + bar.getMilliseconds());
-			}*/
-			
 			var slide = 0;
 			var bHandbrake = false;
+			if(this.offroadCounter > 2)
+				this.offroadCounter = 2;
+			else if(Crafty((Crafty("MapData"))[0]).getSpeed(this.x + this.w/2, this.y+this.h/2) != 1.0){
+				this.offroadCounter += 0.02;
+			}else if(this.offroadCounter > 1){
+				this.offroadCounter -= 1;
+			}
+			
+			if(this.offroadCounter < 1)
+				this.offroadCounter = 1;
 			
 			//forward
 			if(this.isDown(Crafty.keys.W)){
+				if(starttime == 0)
+					starttime = e.frame * 20;
 				this.reverseCounter = 0;
 				if(this._speed > 1)
-					this._speed += this._acceleration / this._speed;// * Crafty((Crafty("MapData"))[0]).getSpeed(this.x, this.y);
+					this._speed += this._acceleration / this._speed / this.offroadCounter;// * Crafty((Crafty("MapData"))[0]).getSpeed(this.x, this.y);
 				else
-					this._speed += this._acceleration;// * Crafty((Crafty("MapData"))[0]).getSpeed(this.x, this.y);
+					this._speed += this._acceleration / this.offroadCounter;// * Crafty((Crafty("MapData"))[0]).getSpeed(this.x, this.y);
 			}
 			
 			//decay speed
-			this._speed = this._speed * 0.98;// * Crafty((Crafty("MapData"))[0]).getSpeed(this.x, this.y);
+			this._speed = this._speed * 0.98 / this.offroadCounter;// * Crafty((Crafty("MapData"))[0]).getSpeed(this.x, this.y);
 		
 			//reverse
 			if(this.isDown(Crafty.keys.S)){
+				if(starttime == 0)
+					starttime = e.frame * 20;
 				if(this._speed == 0 && this.reverseCounter < 10)
 					this.reverseCounter++;
 				if(this._speed > 1){
@@ -46,7 +55,7 @@ Crafty.c("Car", {
 					if(this._speed < 0 && this.reverseCounter < 10)
 						this._speed = 0;
 				}else{
-					this._speed -= this._brakes;
+					this._speed -= this._brakes / this.offroadCounter;// * Crafty((Crafty("MapData"))[0]).getSpeed(this.x, this.y);
 					if(this._speed < 0 && this.reverseCounter < 10)
 						this._speed = 0;
 				}
@@ -90,23 +99,19 @@ Crafty.c("Car", {
 				this._speed = -2;
 			}
 			
-			if(Crafty((Crafty("MapData"))[0]).getPixel(parseInt(this.x),parseInt(this.y)) == "A" || Crafty((Crafty("MapData"))[0]).getPixel(parseInt(this.x),parseInt(this.y)) == "B"){
-				//console.log("on point");
-				if(Crafty((Crafty("MapData"))[0]).getPixel(parseInt(this.x),parseInt(this.y)) != this.previousCheckpoint){
-					//console.log("point was new");
-					this.previousCheckpoint = Crafty((Crafty("MapData"))[0]).getPixel(parseInt(this.x),parseInt(this.y));
+			if(Crafty((Crafty("MapData"))[0]).getPixel(parseInt(this.x + this.w/2),parseInt(this.y+this.h/2)) == "A" || Crafty((Crafty("MapData"))[0]).getPixel(parseInt(this.x + this.w/2),parseInt(this.y+this.h/2))){
+				if(Crafty((Crafty("MapData"))[0]).getPixel(parseInt(this.x + this.w/2),parseInt(this.y+this.h/2)) != this.previousCheckpoint){
+					this.previousCheckpoint = Crafty((Crafty("MapData"))[0]).getPixel(parseInt(this.x + this.w/2),parseInt(this.y+this.h/2));
 					this.checkpointsPassed++;
 					if(Crafty((Crafty("Map"))[0]).getNumberOfCheckpoints() - this.checkpointsPassed == 0){
-						//console.log("get to tha choppa!");
 						this.goalEnabled = true;
 					}
 				}
 			}
 			
 			
-			if(Crafty((Crafty("MapData"))[0]).getPixel(parseInt(this.x),parseInt(this.y)) == "goal" && this.goalEnabled == true){
+			if(Crafty((Crafty("MapData"))[0]).getPixel(parseInt(this.x + this.w/2),parseInt(this.y+this.h/2)) == "goal" && this.goalEnabled == true){
 				Crafty.scene("race_over");
-				//console.log("you win");
 			}
 			
 			this.x += Math.sin(this._rotation * Math.PI / 180) * this._speed;

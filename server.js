@@ -36,7 +36,6 @@ requestTrackPreview = function(trackId) {
 requestTrackData = function(trackId) {
         xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-						console.log(xmlhttp.responseText);
                         var response = JSON.parse(xmlhttp.responseText);
                         playTrack(response);
                 }
@@ -49,25 +48,29 @@ requestTrackData = function(trackId) {
  
 requestRecordForm = function(trackId, recordTime) {
 		xmlhttp.onreadystatechange = function() {
-				if (xmlhttp.readystate == 4 && xmlhttp.status == 200) {
-					showRecordForm(response); 
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					showRecordForm(xmlhttp.responseText);			
 				}
 		}
 		
 		xmlhttp.open("POST", "/" + trackId + "/recordform/" + recordTime, true);
 		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xmlhttp.send("")		
+		xmlhttp.send("");
 }
  
 saveTrackRecord = function(trackId, playerName, recordTime) {
         xmlhttp.onreadystatechange = function() {
                 if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                         var response = JSON.parse(xmlhttp.responseText);
+						document.getElementById("recordform").innerHTML = "";
                         returnToMenu();
                 }
         }
  
-        xmlhttp.open("POST", "/" + trackId + "/newrecord/" + playerName + "/" + recordTime, true);
+        xmlhttp.open("POST", "/" + trackId + "/newrecord", true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xmlhttp.send("")
+		xmlhttp.setRequestHeader("name", playerName); 
+		xmlhttp.setRequestHeader("record", recordTime); 
+		xmlhttp.setRequestHeader("trackid", trackId);
+        xmlhttp.send("");
 }

@@ -22,15 +22,15 @@ Crafty.c("TrackList", {
 	},
 	
 	listResponseHandler: function(trackDataList) {
-		console.log("e");
 		for(var i in trackDataList){
-			this.tracks.push(Crafty.e("TrackListEntry, SpriteFontWriter").TrackListEntry(trackDataList[i]).SpriteFontWriter(5,i*10+5));
+			this.tracks.push(Crafty.e("TrackListEntry, SpriteFontWriter").TrackListEntry(trackDataList[i]).SpriteFontWriter(5,i*20+5));
 			this.tracks[i].setContent(this.tracks[i].getTrackName());
 			this.tracks[i].eraseText();
 			this.tracks[i].writeText();
 		};
 		this.enableSelector(); 
 		this.getTrackPreviewData(0);
+		this.tracks[0].highlight();
 	},
 	
 	getListLength : function(){

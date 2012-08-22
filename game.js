@@ -1,12 +1,11 @@
 window.onload = function() {
 
-	Crafty.init(640, 480);
+	Crafty.init(1280, 720);
 	Crafty.canvas.init();
 	
-	Crafty.sprite(10,30, "http://placehold.it/50/50",{ 
+	Crafty.sprite(20, 47, "/sprites/formula_05_blue_small.png",{ 
 		car_player : [0,0] 
 	});
-	
 	Crafty.scene("loading_game");
 };
 
@@ -14,20 +13,32 @@ var selectedTrack = ""; //handle of track
 var trackData = {};
 var trackList = [];
 var racetime = 0;
+var starttime = 0;
 
 updatePreview = function(response){
+	console.log(response);
 	preview.updateThumbnail(response);
 	preview.updateTrackInfo(response);
 }
 
 playTrack = function(response) {
-	console.log(response);
 	trackData = response; 
 	Crafty.scene("loading_track"); 
 }
 
 showRecordForm = function(response) {
-	document.getElementById("recordform").innerHTML = response; 
+	document.getElementById("recordform").innerHTML = response;
+	var millis = document.getElementById("seconds").innerHTML;
+	var time = new Date(parseInt(millis));
+
+	var ms = time.getMilliseconds();
+
+	if(ms.length == 2)
+		ms = "0"+ms;
+	else if(ms.length == 1)
+		ms = "00"+ms;
+	var string = time.getSeconds()+"s "+ms+"ms";
+	document.getElementById("seconds").innerHTML = string;
 }	
 
 submitRecord = function() {
@@ -43,25 +54,25 @@ returnToMenu = function() {
 		
 
 Crafty.scene("loading_game", function() {
-	//Something like backgrounds, menu sounds..?
-	load = ["http://kauko.pingtimeout.net/Maketrack/track.png","http://kauko.pingtimeout.net/Maketrack/track_data.png"];
+	background = Crafty.e("2D, Canvas, Image").image("/sprites/loading_01.png");
+	Crafty.background("/sprites/loading_01.png");
+	load = ["/sprites/formula_05_blue_small.png","/sprites/loading_01.png", "/sprites/menu_01.png"];
 	Crafty.load(load, function(){
 		Crafty.scene("choose_track");
 	});
 });
 
 Crafty.scene("choose_track", function() {
-	Crafty.background("rgb(0,0,0)");
+	background = Crafty.e("2D, Canvas, Image").image("/sprites/menu_01.png");
 	trackMenu = Crafty.e("Selector, TrackList").TrackList().Selector();
 	preview = Crafty.e("Thumbnail, TrackInfo")
-		.attr({x: 400, y:130})
+		.TrackInfo()
+		.attr({x: 900, y:80})
 		.bind("SelectorMoved", function(e){
 			trackMenu.getTrackPreviewData(e.index);
 		})
 		.bind("TrackSelected",function(e){
-			console.log("track selected!");
 			selectedTrack = trackMenu.getId(trackMenu.getSelectorIndex());
-			console.log(selectedTrack);
 			Crafty.scene("fetching_track");	
 		});
 		
@@ -69,48 +80,57 @@ Crafty.scene("choose_track", function() {
 });
 
 Crafty.scene("fetching_track", function(){
-	console.log("fetching");
+	background = Crafty.e("2D, Canvas, Image").image("/sprites/loading_01.png");
 	requestTrackData(selectedTrack);
 	trackMenu.destroy();
 	preview.destroy();
 });
 
 Crafty.scene("loading_track", function() {
-	console.log("loading");
+	background = Crafty.e("2D, Canvas, Image").image("/sprites/loading_01.png");
 	load = ["/tracks/texture/" + trackData.handle + ".png", "/tracks/mapdata/" + trackData.handle + ".png"];
-	console.log(load);
 	Crafty.load(load,function(){
 		Crafty.scene("play");
 	});
 });
 	
 Crafty.scene("play", function() {
+	starttime = 0; //reset the start timer
 	var prevTime = -2000;
-	console.log("play");
 	CurrentMap = trackData;
 	mapdata = Crafty.e("MapData").MapData("/tracks/mapdata/" + CurrentMap.handle + ".png");
-	texture = Crafty.e("Map").Map(CurrentMap.handle);
+	texture = Crafty.e("Map").Map(CurrentMap);
 	stopwatch = Crafty.e("SpriteFontWriter").SpriteFontWriter(5,15)
 		.bind("EnterFrame", function(e){
-			racetime = e.frame * 20;
-			var time = new Date(racetime);
-			if(time - prevTime > 1000){
-				this.eraseText();
-				this.setContent(time.getSeconds() + ":" + time.getMilliseconds());
-				this.writeText();
-				prevTime = time;
+			if(starttime != 0){ //player hasnt pressed W yet
+				racetime = e.frame * 20;
+				racetime -= starttime;
+				var time = new Date(racetime);
+				if(time - prevTime > 100){
+					this.eraseText();
+					var ms = time.getMilliseconds();
+					if(ms.length == 2)
+						ms = "0"+ms;
+					else if(ms.length == 1)
+						ms = "00"+ms;
+					this.setContent(time.getSeconds() + " " + time.getMilliseconds());
+					this.writeText();
+					prevTime = time;
+				}
 			}
 			
 		});
 	car = Crafty.e("2D, Canvas, car_player, Car, Keyboard")
 		.origin("center")
-		.attr({x: 100, y: 100})
-		.Car();
+		.attr({x: CurrentMap.init_x, y: CurrentMap.init_y})
+		.Car(CurrentMap.init_dir);
 });
 	
 Crafty.scene("race_over", function() {
+	stopwatch.destroy();
+	background = Crafty.e("2D, Canvas, Image").image("/sprites/menu_01.png");
 	mapdata.destroy();
 	texture.destroy();
 	car.destroy();
-	requestRecordForm(/*trackid, recordtime*/)
+	requestRecordForm(selectedTrack, racetime);
 });
