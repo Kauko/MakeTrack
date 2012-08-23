@@ -49,7 +49,7 @@ Crafty.c("TrackInfo", {
 		this.info.entry1.writeText();
 		
 		if (d.records.length > 1) {
-			time = new Date(d.records[0][1]);
+			time = new Date(d.records[1][1]);
 			string = time.getSeconds()+"s "+time.getMilliseconds()+"ms";
 			this.info.entry2.setContent(d.records[1][0] + "   " + string);
 		}
@@ -60,7 +60,7 @@ Crafty.c("TrackInfo", {
 		this.info.entry2.writeText();
 		
 		if (d.records.length > 2) {
-			time = new Date(d.records[0][1]);
+			time = new Date(d.records[2][1]);
 			string = time.getSeconds()+"s "+time.getMilliseconds()+"ms";
 			this.info.entry3.setContent(d.records[2][0] + "   " + string);
 		}
