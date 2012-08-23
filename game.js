@@ -16,7 +16,6 @@ var racetime = 0;
 var starttime = 0;
 
 updatePreview = function(response){
-	console.log(response);
 	preview.updateThumbnail(response);
 	preview.updateTrackInfo(response);
 }

@@ -67,10 +67,7 @@ saveTrackRecord = function(trackId, playerName, recordTime) {
                 }
         }
  
-        xmlhttp.open("POST", "/" + trackId + "/newrecord", true);
+        xmlhttp.open("POST", "/" + trackId + "/newrecord/" + playerName + "/" + recordTime, true);
         xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-		xmlhttp.setRequestHeader("name", playerName); 
-		xmlhttp.setRequestHeader("record", recordTime); 
-		xmlhttp.setRequestHeader("trackid", trackId);
         xmlhttp.send("");
 }
